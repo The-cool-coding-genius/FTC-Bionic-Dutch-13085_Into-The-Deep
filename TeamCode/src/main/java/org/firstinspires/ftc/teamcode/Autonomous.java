@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import TELEOPEN.java;
+import AutoLib.java;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

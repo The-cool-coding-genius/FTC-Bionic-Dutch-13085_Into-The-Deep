@@ -1,5 +1,5 @@
-@TeleOp(name="StateMachineExample")
-public class StateMachine extends OpMode {
+@TeleOp(name="StateMachineSample")
+public class StateMachineSample extends OpMode {
     
     //ENUM listing out the steps
     //LIFT_START = 1, LIFT_EXTEND = 2, so on

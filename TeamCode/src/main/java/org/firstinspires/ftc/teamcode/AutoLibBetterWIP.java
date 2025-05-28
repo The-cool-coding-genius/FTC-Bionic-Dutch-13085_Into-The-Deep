@@ -12,7 +12,7 @@ public class AutoLibBetter extends LinearOpMode{
     private static double Kd;
 
     private static Pose target; // desired position
-    private static double encoderPosition; // current position from the motor encoder
+    private static Pose currentPosition; // current position from the motor encoder
     private static double xError, yError, angleError; // errors in position and angle
     private static double derivative; // rate of change of error
     private static double integralSum; // accumulated error over time
@@ -22,7 +22,7 @@ public class AutoLibBetter extends LinearOpMode{
 
     // Assume armMotor is an instance of a motor class with getPosition() and setPower() methods
     private DcMotorEx frontLeft, backLeft, frontRight, backRight;
-    private GoBildaPinpointDriver Odometry;
+    private static GoBildaPinpointDriver Odometry;
     @Override
     void init() {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -57,7 +57,7 @@ public class AutoLibBetter extends LinearOpMode{
         Kd = d;
     }
     static void runToPosition (double targetPosition) {
-        target = new Pose(0,0,0);;
+        target = new Pose(0,0,0);
 
         integralSum = 0;
 
@@ -70,15 +70,20 @@ public class AutoLibBetter extends LinearOpMode{
 
 
             // obtain the encoder position
-            encoderPosition = Pose();
+            currentPosition = Pose(Odometry.getX(), Odometry.getY(), Odometry.getAngle());
             // calculate the error
-            error = reference - encoderPosition;
+            xError = target.X - currentPosition.X;
+            yError = target.Y - currentPosition.Y;
+            angleError = target.Angle - currentPosition.Angle;
 
             // rate of change of the error
-            derivative = (error - lastError) / timer.seconds();
+            xDerivative = (xError - lastXError) / timer.seconds();
+            yDerivative = (yError - lastYError) / timer.seconds();
+            angleDerivative = (angleError - lastAngleError) / timer.seconds();
 
             // sum of all error over time
-            integralSum = integralSum + (error * timer.seconds());
+            XintegralSum = XintegralSum + (xError * timer.seconds());
+            YintegralSum = YintegralSum + (yError * timer.seconds());
 
             out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
 
@@ -94,9 +99,9 @@ public class AutoLibBetter extends LinearOpMode{
 }
 
 static class Pose {
-    double x;
-    double y;
-    double angle;
+    double X;
+    double Y;
+    double Angle;
 
     Pose(double x, double y, double angle) {
         this.x = x;

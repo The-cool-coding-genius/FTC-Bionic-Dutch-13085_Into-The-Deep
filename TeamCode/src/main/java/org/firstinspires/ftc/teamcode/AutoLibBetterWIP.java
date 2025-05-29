@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Odometry.GoBildaPinpointDriver;
 
+
+@Disabled
+@Autonomous (name = "Auto Library")
 public class AutoLibBetter {
 
     // PID controller variables

@@ -1,0 +1,17 @@
+plugins {
+    ...
+    id "maven-publish"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/DC-al-Coder1/FTC-Bionic-Dutch-13085_Into-The-Deep")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
